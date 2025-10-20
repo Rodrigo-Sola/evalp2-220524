@@ -1,37 +1,40 @@
 <?php
 session_start();
 
-// Verificar sesión
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit;
 }
 
 $mensaje = '';
+$icono = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lado1 = floatval($_POST['lado1'] ?? 0);
     $lado2 = floatval($_POST['lado2'] ?? 0);
     $lado3 = floatval($_POST['lado3'] ?? 0);
 
-    // Validar que los lados formen un triángulo
+    // Verificar que sea un triángulo válido
     if ($lado1 > 0 && $lado2 > 0 && $lado3 > 0 &&
         $lado1 + $lado2 > $lado3 &&
         $lado1 + $lado3 > $lado2 &&
         $lado2 + $lado3 > $lado1) {
 
-        // Determinar tipo de triángulo
         if ($lado1 == $lado2 && $lado2 == $lado3) {
             $tipo = "Equilátero";
+            $icono = "🟦"; // ejemplo: emoji cuadrado como placeholder
         } elseif ($lado1 == $lado2 || $lado1 == $lado3 || $lado2 == $lado3) {
             $tipo = "Isósceles";
+            $icono = "🟩"; // ejemplo: emoji verde
         } else {
             $tipo = "Escaleno";
+            $icono = "🟥"; // ejemplo: emoji rojo
         }
 
         $mensaje = "El triángulo con lados $lado1, $lado2 y $lado3 es <strong>$tipo</strong>.";
     } else {
         $mensaje = "Los valores ingresados no forman un triángulo válido.";
+        $icono = "";
     }
 }
 ?>
@@ -47,8 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #f4f4f4;
             margin: 0;
         }
-
-        /* Navbar */
         .navbar {
             background-color: #007bff;
             overflow: hidden;
@@ -61,15 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 14px 20px;
             text-decoration: none;
         }
-        .navbar a:hover {
-            background-color: #0056b3;
-        }
+        .navbar a:hover { background-color: #0056b3; }
         .navbar .usuario {
             float: right;
             padding: 14px 20px;
             color: #fff;
         }
-
         .formulario {
             background: white;
             padding: 20px;
@@ -77,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 400px;
             margin: 40px auto;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
         }
-
         input[type=number] {
             width: 100%;
             padding: 8px;
@@ -86,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
             border: 1px solid #ccc;
         }
-
         button {
             width: 100%;
             padding: 10px;
@@ -96,31 +93,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
             cursor: pointer;
         }
-        button:hover {
-            background: #0056b3;
-        }
-
+        button:hover { background: #0056b3; }
         .resultado {
             margin-top: 15px;
             background: #e2e2e2;
             padding: 12px;
             border-radius: 6px;
         }
+        .icono {
+            font-size: 50px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <div class="navbar">
         <a href="dashboard.php">Dashboard</a>
         <a href="ejercicio_1.php">Ejercicio 1</a>
         <a href="ejercicio_2.php">Ejercicio 2</a>
-        <a href="pagina1.php">Página 1</a>
-        <a href="pagina2.php">Página 2</a>
+
         <span class="usuario">Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?></span>
         <a href="logout.php">Cerrar sesión</a>
     </div>
 
-    <!-- Formulario Triángulo -->
     <div class="formulario">
         <h2>Determinar Tipo de Triángulo</h2>
         <form method="POST" action="">
@@ -135,7 +130,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <?php if ($mensaje): ?>
-            <div class="resultado"><?= $mensaje ?></div>
+            <div class="resultado">
+                <?= $mensaje ?>
+                <?php if ($icono): ?>
+                    <div class="icono"><?= $icono ?></div>
+                <?php endif; ?>
+            </div>
         <?php endif; ?>
     </div>
 </body>
