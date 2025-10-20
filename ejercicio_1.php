@@ -116,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar">
         <a href="dashboard.php">Dashboard</a>
         <a href="ejercicio_1.php">Ejercicio 1</a>
-        <a href="pagina1.php">Página 1</a>
         <a href="pagina2.php">Página 2</a>
         <span class="usuario">Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?></span>
         <a href="logout.php">Cerrar sesión</a>
