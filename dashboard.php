@@ -75,7 +75,7 @@ if (!isset($_SESSION['usuario'])) {
     <div class="navbar">
         <a href="dashboard.php">Inicio</a>
         <a href="ejercicio_1.php">Página 1</a>
-        <a href="pagina2.php">Página 2</a>
+        <a href="ejercicio_2.php">Página 2</a>
         <span class="usuario">Usuario: <?php echo htmlspecialchars($_SESSION['usuario']); ?></span>
     </div>
 
