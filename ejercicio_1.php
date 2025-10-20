@@ -1,3 +1,38 @@
+<?php
+$mensaje = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Datos del cilindro
+    $radio = floatval($_POST['radio'] ?? 0);
+    $altura_cil = floatval($_POST['altura_cil'] ?? 0);
+
+    // Datos del rectángulo
+    $base_rect = floatval($_POST['base_rect'] ?? 0);
+    $altura_rect = floatval($_POST['altura_rect'] ?? 0);
+
+    // Cálculos
+    if ($radio > 0 && $altura_cil > 0) {
+        $area_cil = 2 * pi() * $radio * ($radio + $altura_cil); // Área superficie
+        $volumen_cil = pi() * pow($radio, 2) * $altura_cil;    // Volumen (opcional)
+        $mensaje .= "<h3>Cilindro:</h3>";
+        $mensaje .= "Área superficial: " . round($area_cil, 2) . "<br>";
+        $mensaje .= "Volumen: " . round($volumen_cil, 2) . "<br>";
+    }
+
+    if ($base_rect > 0 && $altura_rect > 0) {
+        $area_rect = $base_rect * $altura_rect;
+        $perimetro_rect = 2 * ($base_rect + $altura_rect);
+        $mensaje .= "<h3>Rectángulo:</h3>";
+        $mensaje .= "Área: " . round($area_rect, 2) . "<br>";
+        $mensaje .= "Perímetro: " . round($perimetro_rect, 2) . "<br>";
+    }
+
+    if (!$mensaje) {
+        $mensaje = "Por favor, ingrese valores válidos.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -71,4 +106,4 @@
         <?php endif; ?>
     </div>
 </body>
-</html
+</html>
